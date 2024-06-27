@@ -47,16 +47,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    define RGBLED_NUM      74
 #    define RGBLED_SPLIT    { 37, 37 }
 #    ifndef RGBLIGHT_LIMIT_VAL
-#        define RGBLIGHT_LIMIT_VAL  120 // limitated for power consumption
+#        define RGBLIGHT_LIMIT_VAL  63 // limitated for power consumption
 #    endif
 #    ifndef RGBLIGHT_VAL_STEP
-#        define RGBLIGHT_VAL_STEP   12
+#        define RGBLIGHT_VAL_STEP   5
 #    endif
 #    ifndef RGBLIGHT_HUE_STEP
-#        define RGBLIGHT_HUE_STEP   17
+#        define RGBLIGHT_HUE_STEP   5
 #    endif
 #    ifndef RGBLIGHT_SAT_STEP
-#        define RGBLIGHT_SAT_STEP   17
+#        define RGBLIGHT_SAT_STEP   5
 #    endif
 #endif
 #ifdef RGB_MATRIX_ENABLE
