@@ -107,19 +107,24 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     #ifdef RGBLIGHT_LAYERS
     switch(biton32(state)){
         case 0:
-          rgblight_set_layer_state(0, true);
+          // rgblight_set_layer_state(0);
+          rgblight_sethsv(HSV_CYAN);
           break;
         case 1:
-          rgblight_set_layer_state(1, true);
+          // rgblight_set_layer_state(1);
+          rgblight_sethsv(HSV_GOLD);
           break;
         case 2:
-          rgblight_set_layer_state(2, true);
+          // rgblight_set_layer_state(2);
+          rgblight_sethsv(HSV_PURPLE);
           break;
         case 3:
-          rgblight_set_layer_state(3, true);
+          // rgblight_set_layer_state(3);
+          rgblight_sethsv(HSV_RED);
           break;
         default:
-          rgblight_set_layer_state(4, true);
+          // rgblight_set_layer_state(4);
+          rgblight_sethsv(HSV_OFF);
     }
     #endif
     return state;
