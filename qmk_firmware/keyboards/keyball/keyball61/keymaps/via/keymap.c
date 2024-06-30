@@ -113,13 +113,13 @@ layer_state_t layer_state_set_user(layer_state_t state) {
           rgblight_set_layer_state(1, true);
           break;
         case 2:
-          rgblight_set_layer_state(1, true);
+          rgblight_set_layer_state(2, true);
           break;
         case 3:
-          rgblight_set_layer_state(1, true);
+          rgblight_set_layer_state(3, true);
           break;
         default:
-          rgblight_set_layer_state(1, true);
+          rgblight_set_layer_state(4, true);
     }
     #endif
     return state;
