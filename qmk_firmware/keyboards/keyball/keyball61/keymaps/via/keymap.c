@@ -56,6 +56,29 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
+#ifdef RGBLIGHT_LAYERS
+const rgblight_segment_t PROGMEM rgb_layer_1st[] = RGBLIGHT_LAYER_SEGMENTS(
+  // {0, 34, HSV_CYAN}, {0, 37, HSV_GOLD}, 
+  {0, 34, HSV_CYAN}, {34, 74, HSV_GOLD}
+);
+
+const rgblight_segment_t PROGMEM rgb_layer_off[] = RGBLIGHT_LAYER_SEGMENTS(
+  // {0, 34, HSV_CYAN}, {0, 37, HSV_GOLD}, 
+  {0, 74, HSV_OFF}
+);
+
+const rgblight_segment_t* const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    rgb_layer_1st,
+    rgb_layer_off
+);
+#endif
+
+void keyboard_post_init_user(void) {
+    #ifdef RGBLIGHT_LAYERS
+    rgblight_layers = rgb_layers;
+    #endif
+}
+
 #define u8 uint8_t
 void left_right_sethsv(u8 h_l, u8 s_l, u8 v_l, u8 h_r, u8 s_r, u8 v_r){
     rgblight_sethsv_range(h_r, s_r, v_r, 38, 74);
@@ -66,29 +89,28 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     // Auto enable scroll mode when the highest layer is 3
     uint8_t layer = get_highest_layer(state);
     keyball_set_scroll_mode(layer == 3);
+    #ifdef RGBLIGHT_LAYERS
     switch(layer){
         case 0:
-          // rgblight_sethsv(HSV_GOLD);
-          left_right_sethsv(HSV_GOLD, HSV_CYAN);
+          rgblight_set_layer_state(0, true);
           break;
         case 1:
-          // rgblight_sethsv(HSV_CYAN);
-          left_right_sethsv(HSV_PURPLE, HSV_RED);
+          rgblight_set_layer_state(1, true);
           break;
         case 2:
-          rgblight_sethsv(HSV_SPRINGGREEN);
+          rgblight_set_layer_state(1, true);
           break;
         case 3:
-          rgblight_sethsv(HSV_WHITE);
+          rgblight_set_layer_state(1, true);
           break;
         default:
-          rgblight_sethsv(HSV_OFF);
+          rgblight_set_layer_state(1, true);
     }
+    #endif
     return state;
 }
 
 #ifdef OLED_ENABLE
-
 #    include "lib/oledkit/oledkit.h"
 
 void oledkit_render_info_user(void) {
