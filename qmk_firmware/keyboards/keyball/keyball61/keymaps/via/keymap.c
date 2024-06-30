@@ -65,23 +65,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //   HSV_L_R(HSV_OFF, HSV_OFF));
 
 const rgblight_segment_t PROGMEM rgb_layer_0[] = RGBLIGHT_LAYER_SEGMENTS(
-  {0, 34, HSV_CYAN}, {34, 74, HSV_GOLD}
+  {0, 37, HSV_CYAN}, {37, 74, HSV_GOLD}
 );
 
 const rgblight_segment_t PROGMEM rgb_layer_1[] = RGBLIGHT_LAYER_SEGMENTS(
-  {0, 34, HSV_RED}, {34, 74, HSV_PURPLE}
+  {0, 37, HSV_RED}, {37, 74, HSV_PURPLE}
 );
 
 const rgblight_segment_t PROGMEM rgb_layer_2[] = RGBLIGHT_LAYER_SEGMENTS(
-  {0, 34, HSV_ORANGE}, {34, 74, HSV_PINK}
+  {0, 37, HSV_ORANGE}, {37, 74, HSV_PINK}
 );
 
 const rgblight_segment_t PROGMEM rgb_layer_3[] = RGBLIGHT_LAYER_SEGMENTS(
-  {0, 34, HSV_WHITE}, {34, 74, HSV_WHITE}
+  {0, 37, HSV_WHITE}, {37, 74, HSV_WHITE}
 );
 
 const rgblight_segment_t PROGMEM rgb_layer_off[] = RGBLIGHT_LAYER_SEGMENTS(
-  {0, 34, HSV_OFF}, {34, 74, HSV_OFF}
+  {0, 37, HSV_OFF}, {37, 74, HSV_OFF}
 );
 
 const rgblight_segment_t* const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(
