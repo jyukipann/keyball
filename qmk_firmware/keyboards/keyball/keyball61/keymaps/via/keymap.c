@@ -105,7 +105,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     uint8_t layer = get_highest_layer(state);
     keyball_set_scroll_mode(layer == 3);
     #ifdef RGBLIGHT_LAYERS
-    switch(layer){
+    switch(biton32(state)){
         case 0:
           rgblight_set_layer_state(0, true);
           break;
