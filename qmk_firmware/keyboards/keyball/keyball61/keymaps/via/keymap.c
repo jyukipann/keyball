@@ -57,18 +57,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 #ifdef RGBLIGHT_LAYERS
-const rgblight_segment_t PROGMEM rgb_layer_1st[] = RGBLIGHT_LAYER_SEGMENTS(
-  // {0, 34, HSV_CYAN}, {0, 37, HSV_GOLD}, 
+// #define HSV_L_R(HSV_L, HSV_R) ({0, 34, HSV_L}, {34, 74, HSV_R})
+// #define DEF_LAYER(NAME) const rgblight_segment_t PROGMEM NAME[]
+// DEF_LAYER(rgb_layer_1st) = RGBLIGHT_LAYER_SEGMENTS(
+//   HSV_L_R(HSV_CYAN, HSV_GOLD));
+// DEF_LAYER(rgb_layer_off) = RGBLIGHT_LAYER_SEGMENTS(
+//   HSV_L_R(HSV_OFF, HSV_OFF));
+
+const rgblight_segment_t PROGMEM rgb_layer_0[] = RGBLIGHT_LAYER_SEGMENTS(
   {0, 34, HSV_CYAN}, {34, 74, HSV_GOLD}
 );
 
+const rgblight_segment_t PROGMEM rgb_layer_1[] = RGBLIGHT_LAYER_SEGMENTS(
+  {0, 34, HSV_RED}, {34, 74, HSV_PURPLE}
+);
+
+const rgblight_segment_t PROGMEM rgb_layer_2[] = RGBLIGHT_LAYER_SEGMENTS(
+  {0, 34, HSV_ORANGE}, {34, 74, HSV_PINK}
+);
+
+const rgblight_segment_t PROGMEM rgb_layer_3[] = RGBLIGHT_LAYER_SEGMENTS(
+  {0, 34, HSV_WHITE}, {34, 74, HSV_WHITE}
+);
+
 const rgblight_segment_t PROGMEM rgb_layer_off[] = RGBLIGHT_LAYER_SEGMENTS(
-  // {0, 34, HSV_CYAN}, {0, 37, HSV_GOLD}, 
-  {0, 74, HSV_OFF}
+  {0, 34, HSV_OFF}, {34, 74, HSV_OFF}
 );
 
 const rgblight_segment_t* const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(
-    rgb_layer_1st,
+    rgb_layer_0,
+    rgb_layer_1,
+    rgb_layer_2,
+    rgb_layer_3,
     rgb_layer_off
 );
 #endif
