@@ -79,11 +79,6 @@ void keyboard_post_init_user(void) {
     #endif
 }
 
-#define u8 uint8_t
-void left_right_sethsv(u8 h_l, u8 s_l, u8 v_l, u8 h_r, u8 s_r, u8 v_r){
-    rgblight_sethsv_range(h_r, s_r, v_r, 38, 74);
-    rgblight_sethsv_range(h_l, s_l, v_l, 0, 38);
-}
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     // Auto enable scroll mode when the highest layer is 3
