@@ -99,31 +99,28 @@ void keyboard_post_init_user(void) {
     #endif
 }
 
-
 layer_state_t layer_state_set_user(layer_state_t state) {
     // Auto enable scroll mode when the highest layer is 3
     uint8_t layer = get_highest_layer(state);
     keyball_set_scroll_mode(layer == 3);
+    layer = biton32(state);
     #ifdef RGBLIGHT_LAYERS
-    switch(biton32(state)){
+    rgblight_set_layer_state(layer, true);
+    #else
+    switch(layer){
         case 0:
-          // rgblight_set_layer_state(0);
           rgblight_sethsv(HSV_PURPLE);
           break;
         case 1:
-          // rgblight_set_layer_state(1);
           rgblight_sethsv(HSV_GOLD);
           break;
         case 2:
-          // rgblight_set_layer_state(2);
           rgblight_sethsv(HSV_CYAN);
           break;
         case 3:
-          // rgblight_set_layer_state(3);
           rgblight_sethsv(HSV_RED);
           break;
         default:
-          // rgblight_set_layer_state(4);
           rgblight_sethsv(HSV_OFF);
     }
     #endif
