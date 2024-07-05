@@ -108,7 +108,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     switch(biton32(state)){
         case 0:
           // rgblight_set_layer_state(0);
-          rgblight_sethsv(HSV_CYAN);
+          rgblight_sethsv(HSV_PURPLE);
           break;
         case 1:
           // rgblight_set_layer_state(1);
@@ -116,7 +116,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
           break;
         case 2:
           // rgblight_set_layer_state(2);
-          rgblight_sethsv(HSV_PURPLE);
+          rgblight_sethsv(HSV_CYAN);
           break;
         case 3:
           // rgblight_set_layer_state(3);
