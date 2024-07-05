@@ -94,8 +94,27 @@ const rgblight_segment_t* const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(
 #endif
 
 #ifdef SPLIT_COLOR
-void set_split_color(){
-	
+#define u8 uint8_t
+
+void rgblight_sethsv_master(u8 hue, u8 sat, u8 val) {
+	rgblight_sethsv_range(hue, sat, val, 0, (u8)RGBLED_NUM / 2);
+}
+
+void rgblight_sethsv_slave(u8 hue, u8 sat, u8 val) {
+	rgblight_sethsv_range(hue, sat, val, (u8)RGBLED_NUM / 2, (u8)RGBLED_NUM);
+}
+
+void set_split_color(
+					 u8 h_l, u8 s_l, u8 v_l,
+					 u8 h_r, u8 s_r, u8 v_r){
+	// this is master and right
+	if(keyball.this_have_ball){
+		rgblight_sethsv_master(h_r, s_r, v_r);
+		rgblight_sethsv_slave(h_l, s_l, v_l);
+	}else{
+		rgblight_sethsv_master(h_l, s_l, v_l);
+		rgblight_sethsv_slave(h_r, s_r, v_r);
+	}
 }
 #endif
 
@@ -113,7 +132,23 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 	#if defined RGBLIGHT_LAYERS
 	rgblight_set_layer_state(layer, true);
 	#elif defined SPLIT_COLOR
-
+	#define MY_COLOR 255, 0, 100
+	switch(layer){
+		case 0:
+			set_split_color(HSV_PURPLE, HSV_RED);
+			break;
+		case 1:
+			set_split_color(HSV_GOLD, HSV_CYAN);
+			break;
+		case 2:
+			set_split_color(HSV_ORANGE, HSV_PINK);
+			break;
+		case 3:
+			rgblight_setrgb(MY_COLOR);
+			break;
+		default:
+			rgblight_sethsv(HSV_OFF);
+	}
 	#else
 	switch(layer){
 		case 0:

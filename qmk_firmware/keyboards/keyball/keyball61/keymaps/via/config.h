@@ -20,7 +20,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+// #define RGBLIGHT_LAYERS
+#ifdef RGBLIGHT_LAYERS
+    // #define SPLIT_TRANSPORT_MIRROR
+    #define RGBLIGHT_MAX_LAYERS 5
+#endif
+
+// #define SPLIT_COLOR
+
+
 #ifdef RGBLIGHT_ENABLE
+    #if !defined RGBLIGHT_LAYERS && !defined SPLIT_COLOR
+        // #define RGBLIGHT_EFFECT_RAINBOW_MOOD
+        // #define RGBLIGHT_EFFECT_BREATHING
+    #endif
 // #    define RGBLIGHT_EFFECT_BREATHING
 // #    define RGBLIGHT_EFFECT_RAINBOW_MOOD
 //#    define RGBLIGHT_EFFECT_RAINBOW_SWIRL
@@ -37,11 +50,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define POINTING_DEVICE_AUTO_MOUSE_ENABLE
 #define AUTO_MOUSE_DEFAULT_LAYER 2
-
-// #define RGBLIGHT_LAYERS
-#ifdef RGBLIGHT_LAYERS
-    // #define SPLIT_TRANSPORT_MIRROR
-    #define RGBLIGHT_MAX_LAYERS 5
-#endif
-
-#define SPLIT_COLOR
