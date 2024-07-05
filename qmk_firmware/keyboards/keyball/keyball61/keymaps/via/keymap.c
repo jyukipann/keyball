@@ -93,6 +93,12 @@ const rgblight_segment_t* const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(
 );
 #endif
 
+#ifdef SPLIT_COLOR
+void set_split_color(){
+    
+}
+#endif
+
 void keyboard_post_init_user(void) {
     #ifdef RGBLIGHT_LAYERS
     rgblight_layers = rgb_layers;
@@ -104,8 +110,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     uint8_t layer = get_highest_layer(state);
     keyball_set_scroll_mode(layer == 3);
     layer = biton32(state);
-    #ifdef RGBLIGHT_LAYERS
+    #if defined RGBLIGHT_LAYERS
     rgblight_set_layer_state(layer, true);
+    #elif defined SPLIT_COLOR
+
     #else
     switch(layer){
         case 0:
