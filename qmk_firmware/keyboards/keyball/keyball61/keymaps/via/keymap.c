@@ -93,8 +93,9 @@ const rgblight_segment_t* const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(
 );
 #endif
 
-#ifdef SPLIT_COLOR
 #define u8 uint8_t
+
+#ifdef SPLIT_COLOR
 
 void rgblight_sethsv_master(u8 hue, u8 sat, u8 val) {
 	rgblight_sethsv_range(hue, sat, val, 0, (u8)RGBLED_NUM / 2);
@@ -124,6 +125,16 @@ void keyboard_post_init_user(void) {
 	// #endif
 }
 
+void get_values_from_hsv(
+		u8 hue, u8 sat, u8 val, 
+		u8 *hue2set, u8 *sat2set, u8 *val2set){
+	*hue2set = hue;
+	*sat2set = sat;
+	*val2set = val;
+}
+
+
+u8 hue2set, sat2set, val2set;
 layer_state_t layer_state_set_user(layer_state_t state) {
 	// Auto enable scroll mode when the highest layer is 3
 	uint8_t layer = get_highest_layer(state);
@@ -152,20 +163,24 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 	#else
 	switch(layer){
 		case 0:
-			rgblight_sethsv(HSV_PURPLE);
+			get_values_from_hsv(HSV_PURPLE, &hue2set, &sat2set, &val2set);
 			break;
 		case 1:
-			rgblight_sethsv(HSV_GOLD);
+			get_values_from_hsv(HSV_GOLD, &hue2set, &sat2set, &val2set);
 			break;
 		case 2:
-			rgblight_sethsv(HSV_CYAN);
+			get_values_from_hsv(HSV_CYAN, &hue2set, &sat2set, &val2set);
 			break;
 		case 3:
-			rgblight_sethsv(HSV_RED);
+			get_values_from_hsv(HSV_RED, &hue2set, &sat2set, &val2set);
 			break;
 		default:
-			rgblight_sethsv(HSV_OFF);
+			get_values_from_hsv(HSV_OFF, &hue2set, &sat2set, &val2set);
 	}
+	if (val2set > rgblight_get_val()) {
+		val2set = rgblight_get_val();
+	}
+	rgblight_sethsv(hue2set, sat2set, val2set);
 	#endif
 	return state;
 }
