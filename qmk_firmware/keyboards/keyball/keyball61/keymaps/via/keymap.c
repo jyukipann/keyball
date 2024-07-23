@@ -177,7 +177,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 		default:
 			get_values_from_hsv(HSV_OFF, &hue2set, &sat2set, &val2set);
 	}
-	if (val2set > rgblight_get_val()) {
+	if(val2set > rgblight_get_val()){
 		val2set = rgblight_get_val();
 	}
 	rgblight_sethsv(hue2set, sat2set, val2set);
