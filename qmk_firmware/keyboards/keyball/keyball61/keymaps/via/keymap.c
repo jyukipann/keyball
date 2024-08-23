@@ -20,9 +20,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "quantum.h"
 
+#ifdef OLED_ENABLE
 enum custom_keycodes {
   TOGGLE_OLED = SAFE_RANGE,
 };
+
+typedef union {
+    uint32_t raw;
+    struct {
+		bool is_oled_on: true;
+    };
+} user_config_t;
+user_config_t user_config;
+#endif
+
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -127,6 +138,15 @@ void keyboard_post_init_user(void) {
 	// #ifdef RGBLIGHT_LAYERS
 	// rgblight_layers = rgb_layers;
 	// #endif
+	// Read the user config from EEPROM
+	#ifdef OLED_ENABLE
+	user_config.raw = eeconfig_read_user();
+	if(user_config.is_oled_on){
+		oled_on();
+	}else{
+		oled_off();
+	}
+	#endif
 }
 
 void get_values_from_hsv(
@@ -197,18 +217,22 @@ void oledkit_render_info_user(void) {
 	keyball_oled_render_ballinfo();
 	keyball_oled_render_layerinfo();
 }
-#endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-	static bool lshift = false;
-	static bool rshift = false;
 	switch (keycode) {
 		case TOGGLE_OLED:
 			if (record->event.pressed) {
-				現状をセット
+				if(is_oled_on()){
+					oled_off();
+				}else{
+					oled_on();
+				}
+				user_config.is_oled_on = is_oled_on();
+				eeconfig_update_user(user_config.raw); 
 			}
 		return false;
 		break;
 	}
 	return true;
 }
+#endif
