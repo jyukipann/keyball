@@ -20,6 +20,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "quantum.h"
 
+enum custom_keycodes {
+  TOGGLE_OLED = SAFE_RANGE,
+};
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[0] = LAYOUT_universal(
@@ -194,3 +198,17 @@ void oledkit_render_info_user(void) {
 	keyball_oled_render_layerinfo();
 }
 #endif
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+	static bool lshift = false;
+	static bool rshift = false;
+	switch (keycode) {
+		case TOGGLE_OLED:
+			if (record->event.pressed) {
+				現状をセット
+			}
+		return false;
+		break;
+	}
+	return true;
+}
