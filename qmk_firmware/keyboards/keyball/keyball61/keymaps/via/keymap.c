@@ -161,6 +161,7 @@ void get_values_from_hsv(
 	*val2set = val;
 }
 
+bool should_process_keypress(void) { return true; }
 
 u8 hue2set, sat2set, val2set;
 layer_state_t layer_state_set_user(layer_state_t state) {

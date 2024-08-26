@@ -53,4 +53,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define OLED_TIMEOUT 0
 #define OLED_BRIGHTNESS 0
-//#define SPLIT_TRANSPORT_MIRROR
+#define SPLIT_TRANSPORT_MIRROR
