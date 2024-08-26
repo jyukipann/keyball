@@ -52,3 +52,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define AUTO_MOUSE_DEFAULT_LAYER 2
 
 #define OLED_TIMEOUT 0
+#define OLED_BRIGHTNESS 0
+//#define SPLIT_TRANSPORT_MIRROR
