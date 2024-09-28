@@ -137,19 +137,28 @@ void set_split_color(
 }
 #endif
 
-void keyboard_post_init_user(void) {
-	// #ifdef RGBLIGHT_LAYERS
-	// rgblight_layers = rgb_layers;
-	// #endif
-	// Read the user config from EEPROM
-	#ifdef OLED_ENABLE
-	user_config.raw = eeconfig_read_user();
-	oled_set_brightness(user_config.brightness);
-	if(user_config.is_oled_enabled){
+void set_oled_switch(bool onoff){
+	if(onoff){
 		oled_on();
 	}else{
 		oled_off();
 	}
+	user_config.is_oled_enabled = is_oled_on();
+	eeconfig_update_user(user_config.raw); 
+}
+
+void oled_set_brightness_and_update(uint8_t value){
+	oled_set_brightness(value);
+	user_config.brightness = oled_get_brightness();
+	eeconfig_update_user(user_config.raw); 
+}
+
+void keyboard_post_init_user(void) {
+	// #ifdef RGBLIGHT_LAYERS
+	// rgblight_layers = rgb_layers;
+	// #endif
+	#ifdef OLED_ENABLE
+	set_oled_switch(false);
 	#endif
 }
 
@@ -239,29 +248,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
 		case TOGGLE_OLED:
 			if (record->event.pressed) {
-				if(user_config.is_oled_enabled){
-					oled_off();
-				}else{
-					oled_on();
-				}
-				user_config.is_oled_enabled = is_oled_on();
-				eeconfig_update_user(user_config.raw); 
+				set_oled_switch(!user_config.is_oled_enabled);
 			}
 			return false;
 			break;
 		case OLED_MIN:
 			if (record->event.pressed) {
-				oled_set_brightness(0);
-				user_config.brightness = oled_get_brightness();
-				eeconfig_update_user(user_config.raw); 
+				oled_set_brightness_and_update(0);
 			}
 			return false;
 			break;
 		case OLED_MAX:
 			if (record->event.pressed) {
-				oled_set_brightness(255);
-				user_config.brightness = oled_get_brightness();
-				eeconfig_update_user(user_config.raw); 
+				oled_set_brightness_and_update(255);
 			}
 			return false;
 			break;
