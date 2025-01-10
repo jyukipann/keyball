@@ -67,6 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[3] = LAYOUT_universal(
 		KC_NO , KC_NO , KC_NO , KC_NO  , KC_NO  , KC_NO ,                        KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
 		KC_NO , KC_NO , KC_NO , KC_NO  , KC_NO  , KC_NO ,                        KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
+		KC_NO , KC_NO , KC_NO , KC_NO  , KC_NO  , KC_NO ,                        KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
 		KC_NO , KC_NO , KC_NO , KC_NO  , KC_NO  , KC_NO , KC_NO ,        KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO ,
 		KC_NO , KC_NO , KC_NO , KC_NO  , KC_NO  , KC_NO , KC_NO ,        KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO , KC_NO
 	),
