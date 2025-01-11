@@ -51,11 +51,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	),
 
 	[1] = LAYOUT_universal(
-		_______ , G(KC_LEFT), G(KC_DOWN), G(KC_UP) , G(KC_RGHT) , A(KC_F4)   ,                                  KC_GRV     , S(KC_GRV)  , S(KC_9)    , S(KC_0)    , KC_MINS    , KC_EQL  ,
-		_______ , _______   , KC_HOME   , KC_UP    , KC_END     , A(KC_UP)   ,                                  S(KC_COMM) , S(KC_DOT)  , S(KC_LBRC) , S(KC_RBRC) , KC_SLSH    , KC_BSLS ,
-		_______ , _______   , KC_LEFT   , KC_DOWN  , KC_RGHT    , A(KC_DOWN) ,                                  KC_COMM    , KC_DOT     , KC_LBRC    , KC_RBRC    , KC_SCLN    , KC_QUOT ,
-		_______ , _______   , KC_PGUP   , _______  , KC_PGDN    , _______    , _______ ,              _______ , _______    , _______    , S(KC_COMM) , S(KC_DOT)  , S(KC_SCLN) , _______ ,
-		_______ , _______   , _______   , _______  , _______    , _______    , _______ ,              KC_DEL  , KC_ENT     , _______    , _______    , _______    , _______    , _______ 
+		_______ , G(KC_LEFT) , G(KC_DOWN) , G(KC_UP) , G(KC_RGHT) , A(KC_F4)   ,                                  KC_GRV     , S(KC_GRV)  , S(KC_9)    , S(KC_0)    , KC_MINS    , KC_EQL  ,
+		_______ , _______    , KC_HOME    , KC_UP    , KC_END     , A(KC_UP)   ,                                  S(KC_COMM) , S(KC_DOT)  , S(KC_LBRC) , S(KC_RBRC) , KC_SLSH    , KC_BSLS ,
+		_______ , _______    , KC_LEFT    , KC_DOWN  , KC_RGHT    , A(KC_DOWN) ,                                  KC_COMM    , KC_DOT     , KC_LBRC    , KC_RBRC    , KC_SCLN    , KC_QUOT ,
+		_______ , _______    , KC_PGUP    , _______  , KC_PGDN    , _______    , _______ ,              _______ , _______    , _______    , S(KC_COMM) , S(KC_DOT)  , S(KC_SCLN) , _______ ,
+		_______ , _______    , _______    , _______  , _______    , _______    , _______ ,              KC_DEL  , KC_ENT     , _______    , _______    , _______    , _______    , _______ 
 	), 
 
 	[2] = LAYOUT_universal(
