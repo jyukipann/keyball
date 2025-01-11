@@ -160,6 +160,7 @@ void keyboard_post_init_user(void) {
 	#ifdef OLED_ENABLE
 	set_oled_switch(false);
 	#endif
+	set_auto_mouse_enable(false);
 }
 
 void get_values_from_hsv(
@@ -171,6 +172,7 @@ void get_values_from_hsv(
 }
 
 bool should_process_keypress(void) { return true; }
+#define MY_COLOR 240, 255, 100
 
 u8 hue2set, sat2set, val2set;
 layer_state_t layer_state_set_user(layer_state_t state) {
@@ -178,48 +180,22 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 	uint8_t layer = get_highest_layer(state);
 	keyball_set_scroll_mode(layer == 3);
 	layer = biton32(state);
-	#if defined RGBLIGHT_LAYERS
-	rgblight_set_layer_state(layer, true);
-	#elif defined SPLIT_COLOR
-	#define MY_COLOR 255, 0, 100
 	switch(layer){
 		case 0:
-			set_split_color(HSV_PURPLE, HSV_RED);
+			rgblight_sethsv(HSV_WHITE);
 			break;
 		case 1:
-			set_split_color(HSV_GOLD, HSV_CYAN);
+			set_split_color(HSV_PURPLE, HSV_CYAN);
 			break;
 		case 2:
-			set_split_color(HSV_ORANGE, HSV_PINK);
+			set_split_color(HSV_ORANGE, HSV_RED);
 			break;
 		case 3:
-			rgblight_setrgb(MY_COLOR);
+			rgblight_sethsv(MY_COLOR);
 			break;
 		default:
 			rgblight_sethsv(HSV_OFF);
 	}
-	#else
-	switch(layer){
-		case 0:
-			get_values_from_hsv(HSV_PURPLE, &hue2set, &sat2set, &val2set);
-			break;
-		case 1:
-			get_values_from_hsv(HSV_GOLD, &hue2set, &sat2set, &val2set);
-			break;
-		case 2:
-			get_values_from_hsv(HSV_CYAN, &hue2set, &sat2set, &val2set);
-			break;
-		case 3:
-			get_values_from_hsv(HSV_RED, &hue2set, &sat2set, &val2set);
-			break;
-		default:
-			get_values_from_hsv(HSV_OFF, &hue2set, &sat2set, &val2set);
-	}
-	if(val2set > rgblight_get_val()){
-		val2set = rgblight_get_val();
-	}
-	rgblight_sethsv(hue2set, sat2set, val2set);
-	#endif
 	return state;
 }
 
