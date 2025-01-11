@@ -22,7 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define RGBLIGHT_LAYERS
 #ifdef RGBLIGHT_LAYERS
-    #define RGBLIGHT_MAX_LAYERS 5
+    #define RGBLIGHT_MAX_LAYERS 7
 #endif
 
 #define SPLIT_COLOR
@@ -46,3 +46,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define OLED_TIMEOUT 0
 #define OLED_BRIGHTNESS 0
 #define SPLIT_TRANSPORT_MIRROR
+#define MASTER_RIGHT
