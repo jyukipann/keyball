@@ -105,51 +105,17 @@ const rgblight_segment_t PROGMEM rgb_layer_3[] = RGBLIGHT_LAYER_SEGMENTS(
 const rgblight_segment_t PROGMEM rgb_layer_off[] = RGBLIGHT_LAYER_SEGMENTS(
 	{0, 74, HSV_OFF});
 
-const rgblight_segment_t PROGMEM rgb_layer_ctrl[] = RGBLIGHT_LAYER_SEGMENTS(
-	{0, 74, HSV_GREEN});
-
 const rgblight_segment_t *const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(
 	rgb_layer_0,
 	rgb_layer_1,
 	rgb_layer_1_slave,
 	rgb_layer_2,
 	rgb_layer_2_slave,
-	rgb_layer_3,
-	rgb_layer_ctrl
+	rgb_layer_3
 );
 #endif
 
 #define u8 uint8_t
-
-#ifdef SPLIT_COLOR
-
-void rgblight_sethsv_master(u8 hue, u8 sat, u8 val)
-{
-	rgblight_sethsv_range(hue, sat, val, 0, (u8)RGBLED_NUM / 2);
-}
-
-void rgblight_sethsv_slave(u8 hue, u8 sat, u8 val)
-{
-	rgblight_sethsv_range(hue, sat, val, (u8)RGBLED_NUM / 2, (u8)RGBLED_NUM);
-}
-
-void set_split_color(
-	u8 h_l, u8 s_l, u8 v_l,
-	u8 h_r, u8 s_r, u8 v_r)
-{
-	// this is master and right
-	if (keyball.this_have_ball)
-	{
-		rgblight_sethsv_master(h_r, s_r, v_r);
-		rgblight_sethsv_slave(h_l, s_l, v_l);
-	}
-	else
-	{
-		rgblight_sethsv_master(h_l, s_l, v_l);
-		rgblight_sethsv_slave(h_r, s_r, v_r);
-	}
-}
-#endif
 
 void set_oled_switch(bool onoff)
 {
@@ -263,30 +229,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 		break;
 	}
 
-	// MTでctrlを押されたことを検知
-	// uint8_t mod = get_mods();
-	// control 検知 L R 両方
-	// control時にLEDを変更
-	// bool ctrl = mod & MOD_BIT(KC_LCTL) || mod & MOD_BIT(KC_RCTL);
-	
-	if (((record->event.pressed) && (keycode == KC_LCTL || keycode == KC_RCTL)))
-	{
-		rgblight_set_layer_state(6, true);
-	}
-	else
-	{
-		rgblight_set_layer_state(6, false);
-		// rgblight_set_layer_state(0, true);
-	}
-	// if(!ctrl){
-	// 	rgblight_set_layer_state(6, false);
-	// 	rgblight_set_layer_state(0, true);
-	// }
-	if(0x8100 <= keycode && keycode <= 0x81ff){
-		rgblight_set_layer_state(6, true);
-	}else{
-		rgblight_set_layer_state(6, false);
-	}
 	return true;
 }
 #endif
