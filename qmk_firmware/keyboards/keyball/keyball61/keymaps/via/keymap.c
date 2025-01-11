@@ -21,22 +21,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "quantum.h"
 
 #ifdef OLED_ENABLE
-enum custom_keycodes {
-  TOGGLE_OLED = SAFE_RANGE,
-  OLED_MIN,
-  OLED_MAX,
+enum custom_keycodes
+{
+	TOGGLE_OLED = SAFE_RANGE,
+	OLED_MIN,
+	OLED_MAX,
 };
 
-typedef union {
+typedef union
+{
 	uint32_t raw;
-	struct {
-		bool is_oled_enabled: 1;
-		uint8_t brightness: 8;
+	struct
+	{
+		bool is_oled_enabled : 1;
+		uint8_t brightness : 8;
 	};
 } user_config_t;
 user_config_t user_config;
 #endif
-
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -83,88 +85,95 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //   HSV_L_R(HSV_OFF, HSV_OFF));
 
 const rgblight_segment_t PROGMEM rgb_layer_0[] = RGBLIGHT_LAYER_SEGMENTS(
-	{0, 37, HSV_CYAN}, {37, 74, HSV_GOLD}
-);
+	{0, 37, HSV_CYAN}, {37, 74, HSV_GOLD});
 
 const rgblight_segment_t PROGMEM rgb_layer_1[] = RGBLIGHT_LAYER_SEGMENTS(
-	{0, 37, HSV_RED}, {37, 74, HSV_PURPLE}
-);
+	{0, 37, HSV_RED}, {37, 74, HSV_PURPLE});
 
 const rgblight_segment_t PROGMEM rgb_layer_2[] = RGBLIGHT_LAYER_SEGMENTS(
-	{0, 37, HSV_ORANGE}, {37, 74, HSV_PINK}
-);
+	{0, 37, HSV_ORANGE}, {37, 74, HSV_PINK});
 
 const rgblight_segment_t PROGMEM rgb_layer_3[] = RGBLIGHT_LAYER_SEGMENTS(
-	{0, 37, HSV_WHITE}, {37, 74, HSV_WHITE}
-);
+	{0, 37, HSV_WHITE}, {37, 74, HSV_WHITE});
 
 const rgblight_segment_t PROGMEM rgb_layer_off[] = RGBLIGHT_LAYER_SEGMENTS(
-	{0, 37, HSV_OFF}, {37, 74, HSV_OFF}
-);
+	{0, 37, HSV_OFF}, {37, 74, HSV_OFF});
 
-const rgblight_segment_t* const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+const rgblight_segment_t *const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(
 	rgb_layer_0,
 	rgb_layer_1,
 	rgb_layer_2,
 	rgb_layer_3,
-	rgb_layer_off
-);
+	rgb_layer_off);
 #endif
 
 #define u8 uint8_t
 
 #ifdef SPLIT_COLOR
 
-void rgblight_sethsv_master(u8 hue, u8 sat, u8 val) {
+void rgblight_sethsv_master(u8 hue, u8 sat, u8 val)
+{
 	rgblight_sethsv_range(hue, sat, val, 0, (u8)RGBLED_NUM / 2);
 }
 
-void rgblight_sethsv_slave(u8 hue, u8 sat, u8 val) {
+void rgblight_sethsv_slave(u8 hue, u8 sat, u8 val)
+{
 	rgblight_sethsv_range(hue, sat, val, (u8)RGBLED_NUM / 2, (u8)RGBLED_NUM);
 }
 
 void set_split_color(
-					 u8 h_l, u8 s_l, u8 v_l,
-					 u8 h_r, u8 s_r, u8 v_r){
+	u8 h_l, u8 s_l, u8 v_l,
+	u8 h_r, u8 s_r, u8 v_r)
+{
 	// this is master and right
-	if(keyball.this_have_ball){
+	if (keyball.this_have_ball)
+	{
 		rgblight_sethsv_master(h_r, s_r, v_r);
 		rgblight_sethsv_slave(h_l, s_l, v_l);
-	}else{
+	}
+	else
+	{
 		rgblight_sethsv_master(h_l, s_l, v_l);
 		rgblight_sethsv_slave(h_r, s_r, v_r);
 	}
 }
 #endif
 
-void set_oled_switch(bool onoff){
-	if(onoff){
+void set_oled_switch(bool onoff)
+{
+	if (onoff)
+	{
 		oled_on();
-	}else{
+	}
+	else
+	{
 		oled_off();
 	}
 	user_config.is_oled_enabled = is_oled_on();
-	eeconfig_update_user(user_config.raw); 
+	eeconfig_update_user(user_config.raw);
 }
 
-void oled_set_brightness_and_update(uint8_t value){
+void oled_set_brightness_and_update(uint8_t value)
+{
 	oled_set_brightness(value);
 	user_config.brightness = oled_get_brightness();
-	eeconfig_update_user(user_config.raw); 
+	eeconfig_update_user(user_config.raw);
 }
 
-void keyboard_post_init_user(void) {
-	// #ifdef RGBLIGHT_LAYERS
-	// rgblight_layers = rgb_layers;
-	// #endif
-	#ifdef OLED_ENABLE
+void keyboard_post_init_user(void)
+{
+// #ifdef RGBLIGHT_LAYERS
+// rgblight_layers = rgb_layers;
+// #endif
+#ifdef OLED_ENABLE
 	set_oled_switch(false);
-	#endif
+#endif
 }
 
 void get_values_from_hsv(
-		u8 hue, u8 sat, u8 val, 
-		u8 *hue2set, u8 *sat2set, u8 *val2set){
+	u8 hue, u8 sat, u8 val,
+	u8 *hue2set, u8 *sat2set, u8 *val2set)
+{
 	*hue2set = hue;
 	*sat2set = sat;
 	*val2set = val;
@@ -173,97 +182,112 @@ void get_values_from_hsv(
 bool should_process_keypress(void) { return true; }
 
 u8 hue2set, sat2set, val2set;
-layer_state_t layer_state_set_user(layer_state_t state) {
+layer_state_t layer_state_set_user(layer_state_t state)
+{
 	// Auto enable scroll mode when the highest layer is 3
 	uint8_t layer = get_highest_layer(state);
 	keyball_set_scroll_mode(layer == 3);
 	layer = biton32(state);
-	#if defined RGBLIGHT_LAYERS
+#if defined RGBLIGHT_LAYERS
 	rgblight_set_layer_state(layer, true);
-	#elif defined SPLIT_COLOR
-	#define MY_COLOR 255, 0, 100
-	switch(layer){
-		case 0:
-			set_split_color(HSV_PURPLE, HSV_RED);
-			break;
-		case 1:
-			set_split_color(HSV_GOLD, HSV_CYAN);
-			break;
-		case 2:
-			set_split_color(HSV_ORANGE, HSV_PINK);
-			break;
-		case 3:
-			rgblight_setrgb(MY_COLOR);
-			break;
-		default:
-			rgblight_sethsv(HSV_OFF);
+#elif defined SPLIT_COLOR
+#define MY_COLOR 255, 0, 100
+	switch (layer)
+	{
+	case 0:
+		set_split_color(HSV_PURPLE, HSV_RED);
+		break;
+	case 1:
+		set_split_color(HSV_GOLD, HSV_CYAN);
+		break;
+	case 2:
+		set_split_color(HSV_ORANGE, HSV_PINK);
+		break;
+	case 3:
+		rgblight_setrgb(MY_COLOR);
+		break;
+	default:
+		rgblight_sethsv(HSV_OFF);
 	}
-	#else
-	switch(layer){
-		case 0:
-			get_values_from_hsv(HSV_PURPLE, &hue2set, &sat2set, &val2set);
-			break;
-		case 1:
-			get_values_from_hsv(HSV_GOLD, &hue2set, &sat2set, &val2set);
-			break;
-		case 2:
-			get_values_from_hsv(HSV_CYAN, &hue2set, &sat2set, &val2set);
-			break;
-		case 3:
-			get_values_from_hsv(HSV_RED, &hue2set, &sat2set, &val2set);
-			break;
-		default:
-			get_values_from_hsv(HSV_OFF, &hue2set, &sat2set, &val2set);
+#else
+	switch (layer)
+	{
+	case 0:
+		get_values_from_hsv(HSV_PURPLE, &hue2set, &sat2set, &val2set);
+		break;
+	case 1:
+		get_values_from_hsv(HSV_GOLD, &hue2set, &sat2set, &val2set);
+		break;
+	case 2:
+		get_values_from_hsv(HSV_CYAN, &hue2set, &sat2set, &val2set);
+		break;
+	case 3:
+		get_values_from_hsv(HSV_RED, &hue2set, &sat2set, &val2set);
+		break;
+	default:
+		get_values_from_hsv(HSV_OFF, &hue2set, &sat2set, &val2set);
 	}
-	if(val2set > rgblight_get_val()){
+	if (val2set > rgblight_get_val())
+	{
 		val2set = rgblight_get_val();
 	}
 	rgblight_sethsv(hue2set, sat2set, val2set);
-	#endif
+#endif
 	return state;
 }
 
 #ifdef OLED_ENABLE
-#    include "lib/oledkit/oledkit.h"
+#include "lib/oledkit/oledkit.h"
 
-void oledkit_render_info_user(void) {
+void oledkit_render_info_user(void)
+{
 	keyball_oled_render_keyinfo();
 	keyball_oled_render_ballinfo();
 	keyball_oled_render_layerinfo();
 }
 
-bool oled_task_user(void) {
-	if(!user_config.is_oled_enabled){
+bool oled_task_user(void)
+{
+	if (!user_config.is_oled_enabled)
+	{
 		return true;
 	}
-	if (is_keyboard_master()) {
+	if (is_keyboard_master())
+	{
 		oledkit_render_info_user();
-	} else {
+	}
+	else
+	{
 		oledkit_render_logo_user();
 	}
 	return true;
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-	switch (keycode) {
-		case TOGGLE_OLED:
-			if (record->event.pressed) {
-				set_oled_switch(!user_config.is_oled_enabled);
-			}
-			return false;
-			break;
-		case OLED_MIN:
-			if (record->event.pressed) {
-				oled_set_brightness_and_update(0);
-			}
-			return false;
-			break;
-		case OLED_MAX:
-			if (record->event.pressed) {
-				oled_set_brightness_and_update(255);
-			}
-			return false;
-			break;
+bool process_record_user(uint16_t keycode, keyrecord_t *record)
+{
+	switch (keycode)
+	{
+	case TOGGLE_OLED:
+		if (record->event.pressed)
+		{
+			set_oled_switch(!user_config.is_oled_enabled);
+		}
+		return false;
+		break;
+	case OLED_MIN:
+		if (record->event.pressed)
+		{
+			oled_set_brightness_and_update(0);
+		}
+		return false;
+		break;
+	case OLED_MAX:
+		if (record->event.pressed)
+		{
+			oled_set_brightness_and_update(255);
+		}
+		return false;
+		break;
 	}
 	return true;
 }
