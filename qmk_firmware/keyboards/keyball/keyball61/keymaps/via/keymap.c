@@ -97,7 +97,7 @@ const rgblight_segment_t PROGMEM rgb_layer_3[] = RGBLIGHT_LAYER_SEGMENTS(
 	{0, 74, MY_COLOR});
 
 const rgblight_segment_t PROGMEM rgb_layer_off[] = RGBLIGHT_LAYER_SEGMENTS(
-	{0, 37, HSV_OFF}, {37, 74, HSV_OFF});
+	{0, 74, HSV_OFF});
 
 const rgblight_segment_t *const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(
 	rgb_layer_0,
