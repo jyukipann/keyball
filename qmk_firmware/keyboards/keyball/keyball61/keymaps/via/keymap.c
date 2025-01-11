@@ -262,20 +262,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record)
 		return false;
 		break;
 	}
-	uint8_t mods = get_mods();
+
+	// MTでctrlを押されたことを検知
+	uint8_t mod = get_mods();
 	// control 検知 L R 両方
 	// control時にLEDを変更
-	if(mods & MOD_MASK_CTRL)
+	if (mod & MOD_BIT(KC_LCTL) || mod & MOD_BIT(KC_RCTL) || ((record->event.pressed) && (keycode == KC_LCTL || keycode == KC_RCTL)))
 	{
-		if (record->event.pressed && (keycode == KC_LCTL || keycode == KC_RCTL))
-		{
-			rgblight_set_layer_state(6, true);
-		}
-		else
-		{
-			rgblight_set_layer_state(6, false);
-			rgblight_set_layer_state(0, true);
-		}
+		rgblight_set_layer_state(6, true);
+	}
+	else
+	{
+		rgblight_set_layer_state(6, false);
+		rgblight_set_layer_state(0, true);
 	}
 	return true;
 }
