@@ -75,7 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	),
 };
 // clang-format on
-
+#define MY_COLOR 240, 255, 100
 #ifdef RGBLIGHT_LAYERS
 // #define HSV_L_R(HSV_L, HSV_R) ({0, 34, HSV_L}, {34, 74, HSV_R})
 // #define DEF_LAYER(NAME) const rgblight_segment_t PROGMEM NAME[]
@@ -85,16 +85,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //   HSV_L_R(HSV_OFF, HSV_OFF));
 
 const rgblight_segment_t PROGMEM rgb_layer_0[] = RGBLIGHT_LAYER_SEGMENTS(
-	{0, 37, HSV_CYAN}, {37, 74, HSV_GOLD});
+	{0, 74, HSV_WHITE});
 
 const rgblight_segment_t PROGMEM rgb_layer_1[] = RGBLIGHT_LAYER_SEGMENTS(
-	{0, 37, HSV_RED}, {37, 74, HSV_PURPLE});
+	{0, 37, HSV_PURPLE}, {37, 74, HSV_CYAN});
 
 const rgblight_segment_t PROGMEM rgb_layer_2[] = RGBLIGHT_LAYER_SEGMENTS(
-	{0, 37, HSV_ORANGE}, {37, 74, HSV_PINK});
+	{0, 37, HSV_ORANGE}, {37, 74, HSV_RED});
 
 const rgblight_segment_t PROGMEM rgb_layer_3[] = RGBLIGHT_LAYER_SEGMENTS(
-	{0, 37, HSV_WHITE}, {37, 74, HSV_WHITE});
+	{0, 74, MY_COLOR});
 
 const rgblight_segment_t PROGMEM rgb_layer_off[] = RGBLIGHT_LAYER_SEGMENTS(
 	{0, 37, HSV_OFF}, {37, 74, HSV_OFF});
@@ -162,9 +162,9 @@ void oled_set_brightness_and_update(uint8_t value)
 
 void keyboard_post_init_user(void)
 {
-// #ifdef RGBLIGHT_LAYERS
-// rgblight_layers = rgb_layers;
-// #endif
+#ifdef RGBLIGHT_LAYERS
+	rgblight_layers = rgb_layers;
+#endif
 #ifdef OLED_ENABLE
 	set_oled_switch(false);
 #endif
@@ -181,7 +181,6 @@ void get_values_from_hsv(
 }
 
 bool should_process_keypress(void) { return true; }
-#define MY_COLOR 240, 255, 100
 
 u8 hue2set, sat2set, val2set;
 layer_state_t layer_state_set_user(layer_state_t state)
@@ -190,23 +189,10 @@ layer_state_t layer_state_set_user(layer_state_t state)
 	uint8_t layer = get_highest_layer(state);
 	keyball_set_scroll_mode(layer == 3);
 	layer = biton32(state);
-	switch (layer)
-	{
-	case 0:
-		rgblight_sethsv(HSV_WHITE);
-		break;
-	case 1:
-		set_split_color(HSV_PURPLE, HSV_CYAN);
-		break;
-	case 2:
-		set_split_color(HSV_ORANGE, HSV_RED);
-		break;
-	case 3:
-		rgblight_sethsv(MY_COLOR);
-		break;
-	default:
-		rgblight_sethsv(HSV_OFF);
-	}
+	rgblight_set_layer_state(0, layer_state_cmp(state, 0));
+	rgblight_set_layer_state(1, layer_state_cmp(state, 1));
+	rgblight_set_layer_state(2, layer_state_cmp(state, 2));
+	rgblight_set_layer_state(3, layer_state_cmp(state, 3));
 	return state;
 }
 
